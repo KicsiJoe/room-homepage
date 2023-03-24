@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./images/favicon-32x32.png"
+    />
+    <script src="app.js" defer></script>
+    <title>Frontend Mentor | Room homepage</title>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;600;700&display=swap");
+      :root {
+        --dark-gray: hsl(0, 0%, 63%);
+        --black: hsl(0, 0%, 0%);
+        --white: hsl(0, 0%, 100%);
+        --very-dark-gray: hsl(0, 0%, 27%);
+      }
+      body {
+        overflow-x: hidden;
+        box-sizing: border-box;
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        font-size: 12px;
+        font-family: "League Spartan", sans-serif;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-rows: 2fr 1fr;
+      }
+      .fix-page {
+        height: 100%;
+        width: 100vw;
+        position: fixed;
+        z-index: -2;
+        left: 0;
+        top: 0;
+      }
+
+      header {
+        z-index: 21;
+        font-size: 1.5em;
+        justify-content: center;
+        position: fixed;
+        top: 2em;
+        left: 2em;
+        width: 35%;
+        margin-left: auto;
+      }
+
+      header navbar {
+        align-items: baseline;
+        color: var(--white);
+        display: flex;
+        flex-direction: row;
+      }
+
+      nav {
+        width: 100%;
+      }
+
+      header.mobile-drop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 140px;
+        background-color: #fff;
+      }
+
+      navbar .logo {
+        margin-right: 20px;
+        min-width: fit-content;
+        cursor: pointer;
+        width: min-content;
+        box-sizing: content-box;
+        display: grid;
+        align-items: center;
+        text-align: center;
+        font-size: 1.5em;
+        font-weight: 400;
+        height: 1.2em;
+      }
+      navbar .hamburger {
+        display: none;
+      }
+      navbar .hamburger.icon + .logo {
+        display: none;
+      }
+
+      navbar .logo::after {
+        margin-top: 3px;
+        height: 1px;
+        content: "";
+        display: block;
+        background-color: #fff;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.3s ease;
+      }
+
+      navbar ul {
+        justify-content: right;
+        text-transform: lowercase;
+        display: flex;
+        flex-direction: row;
+        list-style-type: none;
+        padding: 0;
+        gap: 5%;
+      }
+      nav ul li {
+        display: block;
+        cursor: pointer;
+      }
+      nav ul li::after {
+        margin-top: 3px;
+        height: 1px;
+        content: "";
+        display: block;
+        background-color: #fff;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.3s ease;
+      }
+
+      nav ul li:hover::after,
+      .logo:hover::after {
+        transform: scaleX(1);
+      }
+
+      .arrows {
+        position: absolute;
+        width: 17%;
+        height: 13%;
+        background-color: black;
+        z-index: 1;
+        display: flex;
+        flex-direction: row;
+        bottom: 0;
+        right: -17%;
+        display: flex;
+        flex-direction: row;
+      }
+      .left {
+        display: grid;
+        place-items: center;
+        flex-basis: 50%;
+        cursor: pointer;
+      }
+      .right {
+        cursor: pointer;
+        flex-basis: 50%;
+        display: grid;
+        place-items: center;
+      }
+
+      .left:hover {
+        background-color: var(--very-dark-gray);
+      }
+      .right:hover {
+        background-color: var(--very-dark-gray);
+      }
+
+      img {
+        object-fit: cover;
+        object-position: center;
+        width: 100%;
+        height: 100%;
+      }
+
+      .attribution {
+        font-size: 11px;
+        text-align: center;
+      }
+      .attribution a {
+        color: hsl(228, 45%, 44%);
+      }
+
+      .section_1 {
+        position: relative;
+        z-index: 1;
+        background-repeat: no-repeat;
+        background-size: cover;
+        grid-column: 1 / span 6;
+        grid-row: 1 / 2;
+      }
+      .section_1 [data-img="2"],
+      .section_1 [data-img="3"] {
+        display: none;
+      }
+
+      .section_4 {
+        padding: 10%;
+        display: flex;
+        flex-direction: row;
+        justify-items: center;
+        align-items: center;
+      }
+      .btn-shop {
+        box-sizing: content-box;
+        color: var(--dark-gray);
+        text-transform: uppercase;
+        letter-spacing: 16px;
+      }
+      .long-arrow {
+        display: block;
+      }
+      .shop-now-arrow {
+        cursor: pointer;
+        display: flex;
+        justify-items: center;
+        align-items: center;
+      }
+
+      .shop-now-arrow svg {
+        fill: hsl(0, 0%, 0%);
+      }
+      .shop-now-arrow:hover svg,
+      .shop-now-arrow:hover .btn-shop {
+        color: var(--dark-gray);
+        fill: var(--dark-gray);
+      }
+
+      .btn-shop {
+        color: hsl(0, 0%, 0%);
+      }
+
+      .section {
+        width: 100%;
+        height: 100%;
+      }
+
+      .section_2 {
+        padding: 10%;
+        padding-top: 20%;
+        grid-column: 7 / -1;
+        grid-row: 1 / 2;
+      }
+      .section_2 h1 {
+        font-weight: 600;
+      }
+      .section_3 {
+        grid-column: 1 / span 3;
+        grid-row: 2 / 3;
+      }
+      .section_4 {
+        grid-column: 4 / span 4;
+        grid-row: 2 / 3;
+      }
+
+      .section_4 h2 {
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+      }
+      .section_4 .text,
+      .section_2 .text {
+        color: var(--dark-gray);
+        line-height: 20px;
+      }
+
+      .section_5 {
+        grid-column: 8 / span 3;
+        grid-row: 2 / 3;
+      }
+      .section_2 [data-text="3"],
+      .section_2 [data-text="2"] {
+        display: none;
+      }
+
+      .section_2 h1 {
+        font-size: 32px;
+      }
+
+      @media screen and (max-width: 800px) {
+        body:has(.overlay-show) {
+          z-index: 2;
+          overflow-y: hidden;
+          top: 0;
+          right: 0;
+          height: 100vh;
+          width: 100vw;
+          background-color: rgba(0, 0, 0, 0.5);
+        }
+        .mobile-drop.on ul li::after {
+          z-index: 50;
+          background-color: var(--black);
+        }
+        .fix-page.overlay-show {
+          z-index: 2; /* Sit on top */
+        }
+
+        nav {
+          display: none;
+        }
+
+        body {
+          font-size: 20px;
+          height: 100%;
+          grid-template-columns: 1fr;
+          grid-template-rows: repeat(5, 1fr);
+        }
+
+        .logo::after {
+          width: min-content;
+          transform: none;
+        }
+
+        header:not(header.on) {
+          width: 100%;
+          left: 0;
+          top: 1.5em;
+          background-color: transparent;
+        }
+
+        header.on navbar nav {
+          position: relative;
+          display: block;
+          color: black;
+          height: 100%;
+        }
+
+        header.on navbar {
+          height: 100%;
+          display: flex;
+          align-items: center;
+        }
+
+        header.on navbar nav ul {
+          height: 100%;
+          margin: 0;
+          align-items: center;
+          padding-right: 30px;
+          font-size: 1em;
+        }
+        navbar {
+          justify-content: center;
+          display: flex;
+          position: relative;
+          font-weight: 400;
+        }
+        navbar .hamburger {
+          cursor: pointer;
+          position: absolute;
+          display: block;
+          left: 5%;
+          top: 17px;
+          z-index: 21;
+          width: 30px;
+          height: 20px;
+        }
+
+        header.on navbar .hamburger .icon {
+          cursor: pointer;
+          position: absolute;
+          display: block;
+          left: 5%;
+          top: 40px;
+          z-index: 21;
+          width: 30px;
+          height: 25px;
+          fill: var(--dark-gray);
+        }
+
+        .section_1,
+        .section_2,
+        .section_3,
+        .section_4,
+        .section_5 {
+          grid-column: 1 / span 1;
+          grid-row: auto;
+        }
+        .section_1 .arrows {
+          right: 0;
+        }
+
+        .section_1 img {
+          height: 100%;
+          width: 100%;
+          object-fit: cover;
+          object-position: top;
+        }
+
+        .shop-now-arrow {
+          margin-top: 40px;
+          margin-bottom: 40px;
+        }
+
+        .section_2,
+        .section_4 {
+          padding: 10% 10%;
+        }
+        .section_2 h1 {
+          margin-bottom: 5px;
+          font-size: 3em;
+          margin-top: 0;
+          font-weight: 400;
+        }
+
+        .section_2 p.text,
+        .section_4 p.text {
+          line-height: 30px;
+        }
+        .section_4 p {
+          margin-top: 5%;
+        }
+
+        .section_2 p {
+          margin-top: 30px;
+        }
+      }
+      @media screen and (min-width: 800px) {
+        header .mobile-drop {
+          display: none;
+        }
+      }
+      /* @media screen and (min-width: 1440px) {
+        body {
+   
+        }
+      } */
+    </style>
+  </head>
+  <body>
+    <div class="fix-page"></div>
+    <header>
+      <navbar>
+        <!-- .mobil-drop -->
+        <div class="hamburger">
+          <img class="ham" src="./images/icon-hamburger.svg" alt="" />
+        </div>
+        <div class="logo">room</div>
+        <nav>
+          <ul>
+            <li>Home</li>
+            <li>Shop</li>
+            <li>About</li>
+            <li>Contact</li>
+          </ul>
+        </nav>
+      </navbar>
+    </header>
+    <section class="section_1">
+      <img
+        class="pic"
+        data-img="1"
+        src="./images/mobile-image-hero-1.jpg"
+        srcset="
+          ./images/mobile-image-hero-1.jpg  375w,
+          ./images/desktop-image-hero-1.jpg 840w
+        "
+        sizes="(max-width: 800px),
+         840px"
+        alt=""
+      />
+      <img
+        class="pic"
+        data-img="2"
+        src="./images/mobile-image-hero-2.jpg"
+        srcset="
+          ./images/mobile-image-hero-2.jpg  375w,
+          ./images/desktop-image-hero-2.jpg 840w
+        "
+        sizes="(max-width: 800px),
+         840px"
+        alt=""
+      />
+      <img
+        class="pic"
+        data-img="3"
+        src="./images/mobile-image-hero-3.jpg"
+        srcset="
+          ./images/mobile-image-hero-3.jpg  375w,
+          ./images/desktop-image-hero-3.jpg 840w
+        "
+        sizes="(max-width: 800px),
+         840px"
+        alt=""
+      />
+
+      <div class="arrows">
+        <div class="left">
+          <svg width="14" height="24" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M13 0L1 12l12 12"
+              stroke="#FFF"
+              fill="none"
+              fill-rule="evenodd"
+            />
+          </svg>
+        </div>
+        <div class="right">
+          <svg width="14" height="24" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M1 0l12 12L1 24"
+              stroke="#FFF"
+              fill="none"
+              fill-rule="evenodd"
+            />
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section class="section_2">
+      <div data-text="1">
+        <h1>Discover innovative ways to decorate</h1>
+        <p class="text">
+          We provide unmatched quality, comfort, and style for property owners
+          across the country. Our experts combine form and function in bringing
+          your vision to life. Create a room in your own style with our
+          collection and make your property a reflection of you and what you
+          love.
+        </p>
+        <div class="shop-now-arrow">
+          <div class="btn-shop">Shop now</div>
+          <svg
+            width="40"
+            class="long-arrow"
+            height="12"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M34.05 0l5.481 5.527h.008v.008L40 6l-.461.465v.063l-.062-.001L34.049 12l-.662-.668 4.765-4.805H0v-1h38.206l-4.82-4.86L34.05 0z"
+            />
+          </svg>
+        </div>
+      </div>
+      <div data-text="2">
+        <h1>We are available all across the globe</h1>
+        <p class="text">
+          With stores all over the world, it's easy for you to find furniture
+          for your home or place of business. Locally, we’re in most major
+          cities throughout the country. Find the branch nearest you using our
+          store locator. Any questions? Don't hesitate to contact us today.
+        </p>
+        <div class="shop-now-arrow">
+          <div class="btn-shop">Shop now</div>
+          <svg width="40" height="12" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M34.05 0l5.481 5.527h.008v.008L40 6l-.461.465v.063l-.062-.001L34.049 12l-.662-.668 4.765-4.805H0v-1h38.206l-4.82-4.86L34.05 0z"
+              fill-rule="nonzero"
+            />
+          </svg>
+        </div>
+      </div>
+      <div data-text="3">
+        <h1>Manufactured with the best materials</h1>
+        <p class="text">
+          Our modern furniture store provide a high level of quality. Our
+          company has invested in advanced technology to ensure that every
+          product is made as perfect and as consistent as possible. With three
+          decades of experience in this industry, we understand what customers
+          want for their home and office.
+        </p>
+        <div class="shop-now-arrow">
+          <div class="btn-shop">Shop now</div>
+          <svg width="40" height="12" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M34.05 0l5.481 5.527h.008v.008L40 6l-.461.465v.063l-.062-.001L34.049 12l-.662-.668 4.765-4.805H0v-1h38.206l-4.82-4.86L34.05 0z"
+              fill-rule="nonzero"
+            />
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section class="section_3">
+      <img class="pic" src="./images/image-about-dark.jpg" alt="" />
+    </section>
+
+    <section class="section_4">
+      <div>
+        <h2 class="title">About our furniture</h2>
+
+        <p class="text">
+          Our multifunctional collection blends design and function to suit your
+          individual taste. Make each room unique, or pick a cohesive theme that
+          best express your interests and what inspires you. Find the furniture
+          pieces you need, from traditional to contemporary styles or anything
+          in between. Product specialists are available to help you create your
+          dream space.
+        </p>
+      </div>
+    </section>
+    <section class="section_5">
+      <img class="pic" src="./images/image-about-light.jpg" alt="" />
+    </section>
+    <!-- <div class="attribution">
+      Challenge by
+      <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
+        >Frontend Mentor</a
+      >. Coded by <a href="#">TOTO</a>.
+    </div> -->
+  </body>
+</html>
